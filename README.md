@@ -102,8 +102,6 @@ node -v   # 显示 v20.x 就行
 
 ### 2. 拉取代码
 
-仓库是私有的，服务器上 clone 需要先登录 GitHub。最省事的办法是在 GitHub 的 Settings → Developer settings → Personal access tokens 里生成一个只读 token，clone 时用户名填 `bored2020`，密码填这个 token。
-
 ```bash
 sudo mkdir -p /opt && cd /opt
 git clone https://github.com/bored2020/kline-live.git
