@@ -1,0 +1,184 @@
+:root {
+  --bg: #0f1218;
+  --panel: #161a22;
+  --border: #262c38;
+  --text: #d6dae3;
+  --muted: #8a93a6;
+  --accent: #f5c542;
+  --up: #f04b4b;
+  --down: #1fbf75;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+button { white-space: nowrap; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+body { display: flex; flex-direction: column; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);
+}
+
+.muted { color: var(--muted); }
+.up { color: var(--up); }
+.down { color: var(--down); }
+
+/* 观众模式隐藏主播控件 */
+body:not(.is-host) .host-only { display: none !important; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding: 8px 14px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; }
+.live-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--up);
+  animation: pulse 1.6s infinite;
+}
+@keyframes pulse { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } }
+
+.symbol-box { display: flex; align-items: baseline; gap: 14px; }
+.symbol-info strong { font-size: 16px; margin-right: 6px; }
+.quote #lastPrice { font-size: 18px; font-weight: 600; margin-right: 6px; }
+
+.search { position: relative; }
+.search input {
+  width: 260px; padding: 6px 10px;
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; outline: none;
+}
+.search input:focus { border-color: var(--accent); }
+.search-result {
+  position: absolute; z-index: 20; top: 100%; left: 0; right: 0;
+  margin: 4px 0 0; padding: 4px 0; list-style: none;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+  max-height: 360px; overflow: auto;
+}
+.search-result li {
+  display: flex; justify-content: space-between; gap: 8px;
+  padding: 6px 10px; cursor: pointer;
+}
+.search-result li[aria-selected="true"], .search-result li:hover { background: #222836; }
+
+.periods, .sub-inds { display: flex; gap: 4px; }
+.periods button, .sub-inds button, .toolbar button, .btn {
+  padding: 4px 10px;
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border); border-radius: 5px;
+  font: inherit; cursor: pointer;
+}
+.periods button[aria-pressed="true"], .sub-inds button[aria-pressed="true"], .toolbar button[aria-pressed="true"] {
+  background: var(--accent); color: #111; border-color: var(--accent);
+}
+.periods button:disabled, .sub-inds button:disabled { cursor: default; }
+body:not(.is-host) .periods button:not([aria-pressed="true"]),
+body:not(.is-host) .sub-inds button:not([aria-pressed="true"]) { opacity: .45; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.indicators { display: flex; align-items: center; gap: 6px; }
+.indicators select {
+  padding: 4px 6px; background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 5px;
+}
+
+.right-box { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.btn.primary { background: var(--accent); color: #111; border-color: var(--accent); }
+.badge {
+  padding: 2px 8px; border-radius: 10px; font-size: 12px;
+  background: #2a3040; color: var(--muted);
+}
+body.is-host .badge { background: var(--up); color: #fff; }
+
+.note-bar {
+  display: flex; gap: 10px; align-items: center;
+  padding: 8px 14px; background: #2a2412; border-bottom: 1px solid #4a3f1a;
+  font-size: 15px;
+}
+.note-label {
+  padding: 1px 8px; border-radius: 4px; background: var(--accent); color: #111; font-size: 12px; font-weight: 600;
+}
+
+.workspace { flex: 1; display: flex; min-height: 0; }
+
+.toolbar {
+  width: 64px; padding: 8px 6px;
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--panel); border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+.toolbar button { padding: 6px 2px; font-size: 12px; }
+.toolbar hr { width: 100%; border: 0; border-top: 1px solid var(--border); margin: 4px 0; }
+.toolbar input[type="color"] {
+  width: 100%; height: 28px; padding: 0; border: 1px solid var(--border); border-radius: 5px; background: none; cursor: pointer;
+}
+.toolbar .danger { color: var(--up); }
+
+.chart-wrap { position: relative; flex: 1; min-width: 0; }
+.chart { position: absolute; inset: 0; }
+
+/* 主播光标（观众端可见） */
+.host-cursor {
+  position: absolute; z-index: 5; pointer-events: none;
+  width: 18px; height: 18px; margin: -9px 0 0 -9px;
+  border: 2px solid var(--accent); border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.loading {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(15, 18, 24, .6); color: var(--muted); z-index: 6;
+}
+
+.host-panel {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 14px; background: var(--panel); border-top: 1px solid var(--border);
+}
+.host-panel input {
+  flex: 1; padding: 6px 10px; background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px;
+}
+
+dialog {
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px; padding: 20px; width: 320px;
+}
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+dialog h3 { margin: 0 0 14px; }
+dialog input {
+  width: 100%; margin-top: 6px; padding: 8px 10px;
+  background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px;
+}
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.error { color: var(--up); margin: 8px 0 0; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 60px; transform: translateX(-50%);
+  padding: 8px 16px; border-radius: 6px; background: #000c; color: #fff;
+  opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 50;
+}
+.toast.show { opacity: 1; }
+
+@media (max-width: 768px) {
+  .topbar { gap: 6px 10px; padding: 6px 8px; }
+  .search, .search input { width: 100%; }
+  .periods, .sub-inds { overflow-x: auto; max-width: 100%; }
+  .periods button, .sub-inds button { padding: 3px 7px; }
+  .toolbar { width: 56px; padding: 6px 4px; }
+  .toolbar button { padding: 5px 0; white-space: normal; }
+  .right-box { margin-left: 0; }
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>K线直播间</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span>K线直播间</span>
+    </div>
+
+    <div class="symbol-box">
+      <div class="symbol-info">
+        <strong id="symName">--</strong>
+        <span id="symCode" class="muted">--</span>
+      </div>
+      <div class="quote">
+        <span id="lastPrice">--</span>
+        <span id="lastChange" class="muted">--</span>
+      </div>
+    </div>
+
+    <div class="search host-only" role="search">
+      <label for="searchInput" class="sr-only">搜索股票或期货</label>
+      <input id="searchInput" type="search" autocomplete="off" placeholder="代码/名称/拼音，如 600519、rb0、黄金">
+      <ul id="searchResult" class="search-result" role="listbox" hidden></ul>
+    </div>
+
+    <nav class="periods" id="periods" aria-label="周期"></nav>
+
+    <div class="indicators" aria-label="指标">
+      <label for="mainInd" class="muted">主图</label>
+      <select id="mainInd">
+        <option value="">无</option>
+        <option value="MA">MA</option>
+        <option value="EMA">EMA</option>
+        <option value="BOLL">BOLL</option>
+      </select>
+      <div id="subInds" class="sub-inds"></div>
+    </div>
+
+    <div class="right-box">
+      <button id="followBtn" class="btn viewer-only" type="button" hidden>回到主播视角</button>
+      <span class="viewers" title="在线人数">在线 <b id="viewerCount">0</b></span>
+      <span id="roleBadge" class="badge">观众</span>
+    </div>
+  </header>
+
+  <div id="noteBar" class="note-bar" hidden>
+    <span class="note-label">主播观点</span>
+    <span id="noteText"></span>
+  </div>
+
+  <main class="workspace">
+    <aside class="toolbar host-only" id="toolbar" aria-label="画线工具"></aside>
+    <section class="chart-wrap">
+      <div id="chart" class="chart"></div>
+      <div id="hostCursor" class="host-cursor" hidden aria-hidden="true"></div>
+      <div id="loading" class="loading" hidden>加载中...</div>
+    </section>
+  </main>
+
+  <div class="host-panel host-only">
+    <label for="noteInput" class="muted">观点：</label>
+    <input id="noteInput" type="text" maxlength="200" placeholder="输入当前观点，回车推送给所有观众（留空则隐藏）">
+  </div>
+
+  <dialog id="authDialog">
+    <form method="dialog" id="authForm">
+      <h3>主播登录</h3>
+      <label for="pwdInput">主播密码</label>
+      <input id="pwdInput" type="password" required autocomplete="current-password">
+      <p id="authError" class="error" hidden>密码错误</p>
+      <div class="dialog-actions">
+        <button type="button" class="btn" id="authCancel">以观众身份观看</button>
+        <button type="submit" class="btn primary">登录</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="/vendor/klinecharts.min.js"></script>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

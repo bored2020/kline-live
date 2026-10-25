@@ -1,0 +1,14 @@
+{
+  "description": "K线直播分享",
+  "dependencies": {
+    "compression": "1.8.2",
+    "express": "4.22.3",
+    "klinecharts": "9.8.12",
+    "ws": "8.22.0"
+  },
+  "name": "kline-live",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  }
+}
